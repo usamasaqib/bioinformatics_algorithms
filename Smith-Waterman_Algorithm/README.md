@@ -2,7 +2,9 @@
 DESCRIPTION
 ***********
 Smith Waterman algorithm for Local Sequence Alignment. Computes alignment with both affine gap penalty and naive gap penalty.
+
 Affine Gap Penalty: The gap opening penalty is 16. Gap Extension penalty is 4.
+
 Navice Gap Penalty: Gap penalty is 4.
 
 *****
