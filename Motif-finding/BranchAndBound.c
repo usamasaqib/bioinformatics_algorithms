@@ -100,8 +100,47 @@ void bypass(int *a, int *i, int L)
 	*i = 0;
 }
 
-int hammingDistance(int* v, int *t, int L, int seq_size);
-int totalHammingDistance( int *v, int** dna, int dna_size, int L, int seq_size);
+int hammingDistance(int* v, int *t, int L, int seq_size)
+{
+	int score = 0;
+	int bestScore = 0;
+
+	for( int i = 0; i < (seq_size - L); ++i)
+	{
+		for( int j = 0; j < L; ++j)
+		{
+			if ( v[j] != t[i+j])
+			{
+				++score;
+			}
+		}
+
+		if ( i == 0)
+		{
+			bestScore = score;
+		}
+		else if ( score < bestScore)
+		{
+			bestScore = score;
+		}
+
+		score = 0;
+	}
+
+	return bestScore;
+}
+
+int totalHammingDistance( int *v, int** dna, int dna_size, int L, int seq_size)
+{
+	int score = 0;
+
+	for ( int i = 0; i < dna_size; ++i)
+	{
+		score = score + hammingDistance(v, dna[i], L, seq_size);
+	}
+
+	return score;
+}
 
 void buildBestArray (int* bestArray, int *lmer, int *level, int L, int half, int **dna, int dna_size, int seq_size)
 {
@@ -150,48 +189,6 @@ void buildBestArray (int* bestArray, int *lmer, int *level, int L, int half, int
 		
 		return;
 	}
-}
-
-int hammingDistance(int* v, int *t, int L, int seq_size)
-{
-	int score = 0;
-	int bestScore = 0;
-
-	for( int i = 0; i < (seq_size - L); ++i)
-	{
-		for( int j = 0; j < L; ++j)
-		{
-			if ( v[j] != t[i+j])
-			{
-				++score;
-			}
-		}
-
-		if ( i == 0)
-		{
-			bestScore = score;
-		}
-		else if ( score < bestScore)
-		{
-			bestScore = score;
-		}
-
-		score = 0;
-	}
-
-	return bestScore;
-}
-
-int totalHammingDistance( int *v, int** dna, int dna_size, int L, int seq_size)
-{
-	int score = 0;
-
-	for ( int i = 0; i < dna_size; ++i)
-	{
-		score = score + hammingDistance(v, dna[i], L, seq_size);
-	}
-
-	return score;
 }
 
 int medianStringSearch(int **dna, int* bestWord, int L, int dna_size, int seq_size)
